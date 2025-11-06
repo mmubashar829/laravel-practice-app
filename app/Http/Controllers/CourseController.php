@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Log;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 echo 'request got into controller to decide related action<br>';
 class CourseController extends Controller
 {
@@ -14,6 +17,9 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $environment = App::environment();
+        $value = Config::get('app.timezone', 'default');
+        Log::error(['use of env variable', env('DB_DATABASE', 'default'), $environment, $value]);
         echo 'request got into action and performing logic building related to request<br>';
         $courses = Course::latest()->paginate(5);
         echo 'end request with returing response<br>';
